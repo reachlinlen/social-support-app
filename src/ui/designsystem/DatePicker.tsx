@@ -3,20 +3,20 @@ import { Controller, type Control, type FieldValues } from 'react-hook-form'
 import { DesktopDatePicker, LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
-import { cn } from '../utils'
+import { cn } from '../../utils'
 
 export function FormDesktopDate({
   control,
   name,
   label,
-  date,
+  date = new Date(),
   isRequired = true,
   className,
 }: {
   control: Control<FieldValues, any, FieldValues>
   name: string
   label: string
-  date: Date
+  date?: Date
   isRequired?: boolean
   className?: string
 }) {
@@ -44,14 +44,14 @@ export function FormMobileDate({
   control,
   name,
   label,
-  date,
+  date = new Date(),
   isRequired = true,
   className,
 }: {
   control: Control<FieldValues, any, FieldValues>
   name: string
   label: string
-  date: Date
+  date?: Date
   isRequired?: boolean
   className?: string
 }) {

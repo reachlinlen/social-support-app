@@ -3,12 +3,10 @@ export type IFormPersonalInfoType = {
   national_id: string
   date_of_birth: Date
   gender: GenderEnum
-  address: {
-    main: string
-    city: string
-    state: string
-    country: string
-  }
+  address: string
+  city: string
+  state: string
+  country: string
   phone: string
   email: string
 }
