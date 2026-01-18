@@ -13,7 +13,7 @@ export function StageProvider(
   //   children: React.ReactNode
   // }
 ) {
-  const [stage, setStage] = useState(2)
+  const [stage, setStage] = useState(3)
   const value = {
     stage,
     setStage,

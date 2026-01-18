@@ -1,6 +1,7 @@
 import { useStage } from '../../utils/stage'
 import { FamilyFinancialInfo } from '../FamilyFinancialInfo'
 import { PersonalInfoForm } from '../PersonalInfo'
+import { SituationDescriptions } from '../SituationDescriptions'
 
 export function SelectStageForm() {
   const { stage } = useStage()
@@ -10,6 +11,8 @@ export function SelectStageForm() {
       return <PersonalInfoForm />
     case 2:
       return <FamilyFinancialInfo />
+    case 3:
+      return <SituationDescriptions />
     default:
       return <p>Issue in Stage. Please revisit.</p>
   }
