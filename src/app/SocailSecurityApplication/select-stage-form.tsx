@@ -1,11 +1,10 @@
-import { useStage } from '../../utils/stage'
+import { useStage } from '../../utils/setup/stage'
 import { FamilyFinancialInfo } from '../FamilyFinancialInfo'
 import { PersonalInfoForm } from '../PersonalInfo'
 import { SituationDescriptions } from '../SituationDescriptions'
 
 export function SelectStageForm() {
   const { stage } = useStage()
-  console.log({ stage })
   switch (stage) {
     case 1:
       return <PersonalInfoForm />

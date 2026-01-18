@@ -1,7 +1,6 @@
-import { openai } from '../../utils/openai'
+import { openai } from '../../utils/setup/openai'
 
 export const callAPI = async (prompt: string) => {
-  console.log('in call API')
   const response = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [
@@ -15,7 +14,5 @@ export const callAPI = async (prompt: string) => {
       },
     ],
   })
-  console.log({ response })
   return response.choices[0].message.content
-  //fetch call
 }
