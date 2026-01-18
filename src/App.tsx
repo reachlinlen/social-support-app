@@ -1,13 +1,13 @@
-import './App.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import { PersonalInfoForm } from './app/PersonalInfo'
+// import { PersonalInfoForm } from './app/PersonalInfo'
+import { SocialSecurityApplication } from './app/SocailSecurityApplication'
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={<PersonalInfoForm />} />
-        <Route path="/personalinfo" element={<PersonalInfoForm />} />
+        <Route path="/" element={<SocialSecurityApplication />} />
+        {/* <Route path="/personalinfo" element={<SocialSecurityApplication />} /> */}
       </>
     )
   )

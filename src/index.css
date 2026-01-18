@@ -1,1 +1,29 @@
 @import 'tailwindcss';
+
+@layer base {
+  h1 {
+    @apply text-6xl;
+    @apply text-center;
+    @apply tracking-tighter;
+  }
+  h2 {
+    @apply text-4xl;
+    @apply text-center;
+    @apply tracking-tighter;
+  }
+}
+
+@layer utilites {
+  .max-w-1024 {
+    max-width: 1024px;
+  }
+  .w-768 {
+    width: 768px;
+  }
+}
+
+@layer components {
+  .desktopView {
+    @apply max-w-screen-sm md:max-w-3xl px-2 xl:px-0 lg:max-w-5xl md:mx-auto;
+  }
+}
