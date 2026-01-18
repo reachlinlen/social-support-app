@@ -6,6 +6,7 @@ import { FormDesktopDate, FormMobileDate } from '../../ui/designsystem/DatePicke
 import { FormSelect } from '../../ui/designsystem/Select'
 import { Gender } from './personal-info.service'
 import type { IFormPersonalInfoType } from './personal-info.types'
+import { useStage } from '../../utils/stage'
 
 export function PersonalInfoForm() {
   const {
@@ -27,11 +28,16 @@ export function PersonalInfoForm() {
     mode: 'onChange',
   })
   // } = useForm<IFormPersonalInfoType>()
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log({ data })
+  const { setStage } = useStage()
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log({ data })
+    setStage((previousStage) => previousStage + 1)
+  }
   return (
     <div className="desktopView">
-      <h1>Social Support Application</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="grid justify-start my-12 gap-y-8">
+      <h1 className="hidden md:block">Social Support Application</h1>
+      <h2 className="md:hidden">Social Support Application</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid justify-evenly md:justify-start my-12 gap-y-8">
         <FormInput control={control} name="name" label="Name" />
         <div className="grid md:flex md:flex-wrap gap-6">
           <FormInput control={control} name="national_id" label="National ID" />
@@ -47,8 +53,10 @@ export function PersonalInfoForm() {
             <FormInput control={control} name="country" label="Country" />
           </div>
         </div>
-        <FormInput control={control} name="phone" label="Phone" />
-        <FormInput control={control} name="email" label="EMail" />
+        <div className="grid md:flex gap-6">
+          <FormInput control={control} name="phone" label="Phone" />
+          <FormInput control={control} name="email" label="EMail" />
+        </div>
         <hr />
         <Button type="submit" variant="contained" className="w-80 justify-self-end">
           Next

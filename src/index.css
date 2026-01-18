@@ -6,6 +6,11 @@
     @apply text-center;
     @apply tracking-tighter;
   }
+  h2 {
+    @apply text-4xl;
+    @apply text-center;
+    @apply tracking-tighter;
+  }
 }
 
 @layer utilites {
