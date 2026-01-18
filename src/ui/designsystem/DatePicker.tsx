@@ -1,5 +1,4 @@
-import dayjs from 'dayjs'
-import { Controller, type Control, type FieldValues } from 'react-hook-form'
+import { Controller, type Control } from 'react-hook-form'
 import { DesktopDatePicker, LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
@@ -9,14 +8,12 @@ export function FormDesktopDate({
   control,
   name,
   label,
-  date = new Date(),
   isRequired = true,
   className,
 }: {
-  control: Control<FieldValues, any, FieldValues>
+  control: Control | any
   name: string
   label: string
-  date?: Date
   isRequired?: boolean
   className?: string
 }) {
@@ -25,17 +22,19 @@ export function FormDesktopDate({
       name={name}
       control={control}
       rules={{ required: isRequired }}
-      render={({ field }) => (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DesktopDatePicker
-            label={label}
-            defaultValue={dayjs(date)}
-            {...field}
-            format="LL"
-            className={cn('min-w-80 max-w-80 hidden lg:block', className)}
-          />
-        </LocalizationProvider>
-      )}
+      render={({ field }) => {
+        return (
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DesktopDatePicker
+              value={field.value}
+              label={label}
+              format="LL"
+              onChange={field.onChange}
+              className={cn('min-w-80 max-w-80 hidden lg:block', className)}
+            />
+          </LocalizationProvider>
+        )
+      }}
     />
   )
 }
@@ -44,14 +43,12 @@ export function FormMobileDate({
   control,
   name,
   label,
-  date = new Date(),
   isRequired = true,
   className,
 }: {
-  control: Control<FieldValues, any, FieldValues>
+  control: Control | any
   name: string
   label: string
-  date?: Date
   isRequired?: boolean
   className?: string
 }) {
@@ -63,10 +60,10 @@ export function FormMobileDate({
       render={({ field }) => (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <MobileDatePicker
+            value={field.value}
             label={label}
-            defaultValue={dayjs(date)}
-            {...field}
             format="LL"
+            onChange={field.onChange}
             className={cn('min-w-80 max-w-80 lg:hidden', className)}
           />
         </LocalizationProvider>

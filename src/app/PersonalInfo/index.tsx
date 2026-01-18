@@ -1,20 +1,21 @@
 import { useForm, type SubmitHandler, type FieldValues } from 'react-hook-form'
+import { Button } from '@mui/material'
+
 import { FormInput, FormTextArea } from '../../ui/designsystem/Input'
 import { FormDesktopDate, FormMobileDate } from '../../ui/designsystem/DatePicker'
 import { FormSelect } from '../../ui/designsystem/Select'
 import { Gender } from './personal-info.service'
-import { Button } from '@mui/material'
+import type { IFormPersonalInfoType } from './personal-info.types'
 
 export function PersonalInfoForm() {
   const {
     control,
     handleSubmit,
-    // formState: { errors },
-  } = useForm({
+    formState: { errors },
+  } = useForm<IFormPersonalInfoType>({
     defaultValues: {
       name: '',
       national_id: '',
-      date_of_birth: new Date(),
       gender: '',
       address: '',
       city: '',
@@ -23,6 +24,7 @@ export function PersonalInfoForm() {
       phone: '',
       email: '',
     },
+    mode: 'onChange',
   })
   // } = useForm<IFormPersonalInfoType>()
   const onSubmit: SubmitHandler<FieldValues> = (data) => console.log({ data })
@@ -34,7 +36,7 @@ export function PersonalInfoForm() {
         <div className="grid md:flex md:flex-wrap gap-6">
           <FormInput control={control} name="national_id" label="National ID" />
           <FormDesktopDate control={control} name="date_of_birth" label="Date of Birth" />
-          <FormMobileDate control={control} name="date_of_birth" label="Date of Births" />
+          <FormMobileDate control={control} name="date_of_birth" label="Date of Birth" />
           <FormSelect control={control} id="select-gender" name="gender" label="Gender" items={Gender} />
         </div>
         <div className="grid lg:flex gap-6">

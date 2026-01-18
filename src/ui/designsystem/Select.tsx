@@ -1,4 +1,4 @@
-import { Controller, type Control, type FieldValues } from 'react-hook-form'
+import { Controller, type Control } from 'react-hook-form'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 import { InputLabel, MenuItem } from '@mui/material'
@@ -15,7 +15,7 @@ export function FormSelect({
   isRequired = true,
   className,
 }: {
-  control: Control<FieldValues, any, FieldValues>
+  control: Control | any
   name: string
   id: string
   label: string
@@ -34,7 +34,7 @@ export function FormSelect({
       render={({ field }) => (
         <FormControl className={cn('min-w-80 max-w-80', className)}>
           <InputLabel id={id}>{label}</InputLabel>
-          <Select labelId={id} id="simple-select" value={field.value} label="Age">
+          <Select label={label} value={field.value} onChange={field.onChange} required={isRequired}>
             {Object.keys(items).map((k) => (
               <MenuItem key={k} value={k}>
                 {items[k]}

@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material'
-import { Controller, type Control, type FieldValues } from 'react-hook-form'
+import { Controller, type Control, type FieldErrors } from 'react-hook-form'
 import { cn } from '../../utils'
 
 export function FormInput({
@@ -9,7 +9,7 @@ export function FormInput({
   isRequired = true,
   className,
 }: {
-  control: Control<FieldValues, any, FieldValues>
+  control: Control | any
   name: string
   label: string
   isRequired?: boolean
@@ -20,15 +20,17 @@ export function FormInput({
       name={name}
       control={control}
       rules={{ required: isRequired }}
-      render={({ field }) => (
-        <TextField
-          variant="outlined"
-          label={label}
-          required={isRequired}
-          {...field}
-          className={cn('min-w-80 max-w-80', className)}
-        />
-      )}
+      render={({ field }) => {
+        return (
+          <TextField
+            variant="outlined"
+            label={label}
+            onChange={field.onChange}
+            required={isRequired}
+            className={cn('min-w-80 max-w-80', className)}
+          />
+        )
+      }}
     />
   )
 }
@@ -41,7 +43,7 @@ export function FormTextArea({
   isRequired = true,
   className,
 }: {
-  control: Control<FieldValues, any, FieldValues>
+  control: Control | any
   name: string
   label: string
   rows?: number
@@ -53,14 +55,15 @@ export function FormTextArea({
       name={name}
       control={control}
       rules={{ required: isRequired }}
-      render={({ field }) => (
+      render={({ field, fieldState }) => (
         <TextField
+          helperText={fieldState.error?.message}
           variant="outlined"
           label={label}
           required={isRequired}
           multiline
           rows={rows}
-          {...field}
+          onChange={field.onChange}
           className={cn('min-w-80 max-w-80', className)}
         />
       )}
