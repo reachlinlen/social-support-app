@@ -1,20 +1,18 @@
 import { TextField } from '@mui/material'
 import { Controller, type Control, type FieldErrors } from 'react-hook-form'
 import { cn } from '../../utils'
+import type { ComponentPropsWithoutRef } from 'react'
 
-export function FormInput({
-  control,
-  name,
-  label,
-  isRequired = true,
-  className,
-}: {
+interface InputGroupProps extends ComponentPropsWithoutRef<'input'> {
+  label: string
   control: Control | any
   name: string
-  label: string
   isRequired?: boolean
+  rows?: number
   className?: string
-}) {
+}
+
+export function FormInput({ control, name, label, isRequired = true, className }: InputGroupProps) {
   return (
     <Controller
       name={name}
@@ -42,6 +40,7 @@ export function FormTextArea({
   rows = 3,
   isRequired = true,
   className,
+  ...rest
 }: {
   control: Control | any
   name: string
@@ -63,8 +62,10 @@ export function FormTextArea({
           required={isRequired}
           multiline
           rows={rows}
+          value={field.value}
           onChange={field.onChange}
           className={cn('min-w-80 max-w-80', className)}
+          {...rest}
         />
       )}
     />

@@ -1,0 +1,21 @@
+import { openai } from '../../utils/openai'
+
+export const callAPI = async (prompt: string) => {
+  console.log('in call API')
+  const response = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      {
+        role: 'system',
+        content: 'You are an AI assistant, answer any questions to the best of your ability.',
+      },
+      {
+        role: 'user',
+        content: prompt,
+      },
+    ],
+  })
+  console.log({ response })
+  return response.choices[0].message.content
+  //fetch call
+}
