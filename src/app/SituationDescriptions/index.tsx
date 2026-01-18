@@ -1,13 +1,14 @@
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
+import { Button } from '@mui/material'
+
 import { FormTextArea } from '../../ui/designsystem/Input'
 import { HelpMeWrite } from './HelpMeWrite'
 import type { SituationsDescriptionsType } from './situation-descriptions.types'
-import { Button } from '@mui/material'
 import { useStage } from '../../utils/stage'
 
 export function SituationDescriptions() {
   const { setStage } = useStage()
-  const { control, handleSubmit } = useForm<SituationsDescriptionsType>({
+  const { control, handleSubmit, setValue } = useForm<SituationsDescriptionsType>({
     defaultValues: {
       current_financial_situation: '',
       employment_circumstances: '',
@@ -15,10 +16,7 @@ export function SituationDescriptions() {
     },
     mode: 'onChange',
   })
-  const callAPI = () => {
-    console.log('in call API')
-    //fetch call
-  }
+
   const handleBack = () => {
     setStage((previousStage) => previousStage - 1)
   }
@@ -38,7 +36,15 @@ export function SituationDescriptions() {
             className="min-w-2/3"
             rows={5}
           />
-          <HelpMeWrite callAPI={callAPI} />
+          <HelpMeWrite
+            type="current_financial_situation"
+            handleAccept={(acceptedResponse: string) => {
+              setValue('current_financial_situation', acceptedResponse, {
+                shouldValidate: true,
+                shouldDirty: true,
+              })
+            }}
+          />
           <hr className="md:hidden" />
         </div>
         <div className="grid md:flex gap-4 items-end">
@@ -49,7 +55,15 @@ export function SituationDescriptions() {
             className="min-w-2/3"
             rows={5}
           />
-          <HelpMeWrite callAPI={callAPI} />
+          <HelpMeWrite
+            type="employment_circumstances"
+            handleAccept={(acceptedResponse: string) => {
+              setValue('employment_circumstances', acceptedResponse, {
+                shouldValidate: true,
+                shouldDirty: true,
+              })
+            }}
+          />
           <hr className="md:hidden" />
         </div>
         <div className="grid md:flex gap-4 items-end">
@@ -60,7 +74,15 @@ export function SituationDescriptions() {
             className="min-w-2/3"
             rows={5}
           />
-          <HelpMeWrite callAPI={callAPI} />
+          <HelpMeWrite
+            type="reason_for_applying"
+            handleAccept={(acceptedResponse: string) => {
+              setValue('reason_for_applying', acceptedResponse, {
+                shouldValidate: true,
+                shouldDirty: true,
+              })
+            }}
+          />
           <hr className="md:hidden" />
         </div>
         <hr className="hidden md:block" />
