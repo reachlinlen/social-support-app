@@ -1,15 +1,17 @@
 import { useForm, type SubmitHandler, type FieldValues, useFieldArray } from 'react-hook-form'
 import { Button } from '@mui/material'
 import { IconPlus, IconTrashFilled } from '@tabler/icons-react'
+import { useTranslation } from 'react-i18next'
 
 import { FormSelect } from '../../ui/designsystem/Select'
-import { useStage } from '../../utils/stage'
+import { useStage } from '../../utils/setup/stage'
 import type { IFormFamilyFinancialInfoType } from './family-financial.types'
 import { EmploymentStatus, HousingStatus, MaritalStatus, NEW_DEPENDENT } from './family-financial.service'
 import { FormInput } from '../../ui/designsystem/Input'
 
 export function FamilyFinancialInfo() {
   const { setStage } = useStage()
+  const { t } = useTranslation()
   const { control, handleSubmit } = useForm<IFormFamilyFinancialInfoType>({
     defaultValues: {
       marital_status: '',
@@ -96,10 +98,10 @@ export function FamilyFinancialInfo() {
         <hr />
         <div className="flex flex-wrap justify-end flex-col-reverse md:flex-row gap-8">
           <Button type="submit" variant="contained" className="w-80 justify-self-end">
-            Next
+            {t('next')}
           </Button>
           <Button variant="outlined" className="w-80 justify-self-end" onClick={handleBack}>
-            Back
+            {t('next')}
           </Button>
         </div>
       </form>

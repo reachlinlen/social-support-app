@@ -26,6 +26,9 @@ importers:
       dayjs:
         specifier: ^1.11.19
         version: 1.11.19
+      i18next:
+        specifier: ^25.7.4
+        version: 25.7.4(typescript@5.9.3)
       openai:
         specifier: ^6.16.0
         version: 6.16.0(zod@4.3.5)
