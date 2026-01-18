@@ -1,27 +1,20 @@
 import { Button, Dialog, DialogTitle, Paper, DialogContent } from '@mui/material'
 import { useState } from 'react'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
+
 import { FormTextArea } from '../../../ui/designsystem/Input'
-
 import { callAPI } from '../situation-description.service'
+import { LatestResponse } from './latest-response'
 
-export function HelpMeWrite() {
+export function HelpMeWrite({ handleAccept }: { handleAccept: (acceptedResponse: string) => void }) {
   const [open, setOpen] = useState(false)
+  const [latestResponse, setLatestResponse] = useState<string | undefined>(undefined)
   const [interaction, setInteraction] = useState<
     {
       prompt: string
       response: string
     }[]
-  >([
-    // {
-    //   prompt: 'How',
-    //   response: 'Surely I can help you',
-    // },
-    // {
-    //   prompt: 'How',
-    //   response: 'Surely I can help you',
-    // },
-  ])
+  >([])
   const { control, handleSubmit } = useForm<{ prompt: string }>({
     defaultValues: {
       prompt: '',
@@ -36,8 +29,12 @@ export function HelpMeWrite() {
     setOpen(false)
   }
 
+  const handleAcceptClick = (acceptedResponse: string) => {
+    setOpen(false)
+    handleAccept(acceptedResponse)
+  }
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log({ data })
     const response = await callAPI(data.prompt)
     if (response) {
       interaction.push({
@@ -45,7 +42,47 @@ export function HelpMeWrite() {
         response,
       })
       setInteraction([...interaction])
+      setLatestResponse(response)
     }
+  }
+
+  const ShowInteraction = () => {
+    return (
+      <>
+        <div className="desktopView">
+          {/* Old Prompts & their responses */}
+          <div className="grid gap-8">
+            {interaction.map((interaction) => {
+              return (
+                <div key={interaction.prompt} className="max-w-5/6">
+                  <Paper elevation={1}>
+                    <p>Prompt: {interaction.prompt}</p>
+                    <p>Response: {interaction.response}</p>
+                  </Paper>
+                </div>
+              )
+            })}
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="grid space-y-6 mt-4 md:mt-8">
+            <div className="flex gap-x-4">
+              <FormTextArea
+                control={control}
+                name="prompt"
+                label="Enter a Prompt to request AI to give suggestions..."
+                rows={3}
+                className={'min-w-5/6'}
+              />
+              <Button type="submit" variant="outlined" className="min-w-20 max-w-20 h-9 self-end">
+                Ask AI
+              </Button>
+            </div>
+          </form>
+        </div>
+        <Button variant="outlined" onClick={handleClose} className="min-w-20 max-w-20 mt-2">
+          Close
+        </Button>
+      </>
+    )
   }
 
   return (
@@ -58,38 +95,13 @@ export function HelpMeWrite() {
           Hey AI, Help me to fill this form...
         </DialogTitle>
         <DialogContent>
-          <div className="desktopView">
-            {/* Old Prompts & their responses */}
-            <div className="grid gap-8">
-              {interaction.map((interaction) => {
-                return (
-                  <div key={interaction.prompt} className="max-w-5/6">
-                    <Paper elevation={1}>
-                      <p>Prompt: {interaction.prompt}</p>
-                      <p>Response: {interaction.response}</p>
-                    </Paper>
-                  </div>
-                )
-              })}
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)} className="grid space-y-6 mt-4 md:mt-8">
-              <div className="flex gap-x-4">
-                <FormTextArea
-                  control={control}
-                  name="prompt"
-                  label="Enter a Prompt to request AI to give suggestions..."
-                  rows={3}
-                  className={'min-w-5/6'}
-                />
-                <Button type="submit" variant="outlined" className="min-w-20 max-w-20 h-9 self-end">
-                  Ask AI
-                </Button>
-              </div>
-            </form>
-          </div>
-          <Button variant="outlined" onClick={handleClose} className="min-w-20 max-w-20 mt-2">
-            Close
-          </Button>
+          {latestResponse ?
+            <LatestResponse
+              response={latestResponse}
+              handleAccept={handleAcceptClick}
+              handleClose={() => setLatestResponse(undefined)}
+            />
+          : <ShowInteraction />}
         </DialogContent>
       </Dialog>
     </div>

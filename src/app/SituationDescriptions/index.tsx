@@ -7,7 +7,7 @@ import { useStage } from '../../utils/stage'
 
 export function SituationDescriptions() {
   const { setStage } = useStage()
-  const { control, handleSubmit } = useForm<SituationsDescriptionsType>({
+  const { control, handleSubmit, setValue } = useForm<SituationsDescriptionsType>({
     defaultValues: {
       current_financial_situation: '',
       employment_circumstances: '',
@@ -35,7 +35,14 @@ export function SituationDescriptions() {
             className="min-w-2/3"
             rows={5}
           />
-          <HelpMeWrite />
+          <HelpMeWrite
+            handleAccept={(acceptedResponse: string) => {
+              setValue('current_financial_situation', acceptedResponse, {
+                shouldValidate: true,
+                shouldDirty: true,
+              })
+            }}
+          />
           <hr className="md:hidden" />
         </div>
         <div className="grid md:flex gap-4 items-end">
