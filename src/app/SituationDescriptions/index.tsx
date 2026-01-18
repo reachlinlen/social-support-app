@@ -15,10 +15,7 @@ export function SituationDescriptions() {
     },
     mode: 'onChange',
   })
-  const callAPI = () => {
-    console.log('in call API')
-    //fetch call
-  }
+
   const handleBack = () => {
     setStage((previousStage) => previousStage - 1)
   }
@@ -38,7 +35,7 @@ export function SituationDescriptions() {
             className="min-w-2/3"
             rows={5}
           />
-          <HelpMeWrite callAPI={callAPI} />
+          <HelpMeWrite />
           <hr className="md:hidden" />
         </div>
         <div className="grid md:flex gap-4 items-end">
@@ -49,7 +46,7 @@ export function SituationDescriptions() {
             className="min-w-2/3"
             rows={5}
           />
-          <HelpMeWrite callAPI={callAPI} />
+          <HelpMeWrite />
           <hr className="md:hidden" />
         </div>
         <div className="grid md:flex gap-4 items-end">
@@ -60,7 +57,7 @@ export function SituationDescriptions() {
             className="min-w-2/3"
             rows={5}
           />
-          <HelpMeWrite callAPI={callAPI} />
+          <HelpMeWrite />
           <hr className="md:hidden" />
         </div>
         <hr className="hidden md:block" />
