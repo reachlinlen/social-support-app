@@ -35,8 +35,7 @@ export function PersonalInfoForm() {
   }
   return (
     <div className="desktopView">
-      <h1 className="hidden md:block">Social Support Application</h1>
-      <h2 className="md:hidden">Social Support Application</h2>
+      <h2 className="mt-8">Personal Information</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="grid justify-evenly md:justify-start my-12 gap-y-8">
         <FormInput control={control} name="name" label="Name" />
         <div className="grid md:flex md:flex-wrap gap-6">

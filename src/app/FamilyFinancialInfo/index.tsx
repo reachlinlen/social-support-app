@@ -1,3 +1,108 @@
+import { useForm, type SubmitHandler, type FieldValues, useFieldArray } from 'react-hook-form'
+import { Button } from '@mui/material'
+import { IconPlus, IconTrashFilled } from '@tabler/icons-react'
+
+import { FormSelect } from '../../ui/designsystem/Select'
+import { useStage } from '../../utils/stage'
+import type { IFormFamilyFinancialInfoType } from './family-financial.types'
+import { EmploymentStatus, HousingStatus, MaritalStatus, NEW_DEPENDENT } from './family-financial.service'
+import { FormInput } from '../../ui/designsystem/Input'
+
 export function FamilyFinancialInfo() {
-  return <p>In FamilyFinancialInfo</p>
+  const { setStage } = useStage()
+  const { control, handleSubmit } = useForm<IFormFamilyFinancialInfoType>({
+    defaultValues: {
+      marital_status: '',
+      dependents: [NEW_DEPENDENT],
+      employment_status: '',
+      monthly_income: undefined,
+      housing_status: undefined,
+    },
+    mode: 'onChange',
+  })
+  const { fields: dependentFields, append, remove } = useFieldArray({ name: 'dependents', control })
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log({ data })
+    setStage((previousStage) => previousStage + 1)
+  }
+  const handleBack = () => {
+    setStage((previousStage) => previousStage - 1)
+  }
+  return (
+    <div className="desktopView">
+      <h2 className="hidden md:block mt-8">Family & Financial Information</h2>
+      <h3 className="block md:hidden mt-8 text-center">Family & Financial Information</h3>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid justify-evenly md:justify-start gap-8">
+        <div className="grid md:flex md:flex-wrap justify-evenly md:justify-start my-12 gap-8">
+          <FormSelect
+            control={control}
+            id="select-marital-status"
+            name="marital_status"
+            label="Marital Status"
+            items={MaritalStatus}
+          />
+          <FormSelect
+            control={control}
+            id="select-employment-status"
+            name="employment_status"
+            label="Employment Status"
+            items={EmploymentStatus}
+          />
+          <FormSelect
+            control={control}
+            id="select-housing-status"
+            name="housing_status"
+            label="Housing Status"
+            items={HousingStatus}
+          />
+        </div>
+        <div className="grid space-y-4">
+          <h3>DEPENDENTS</h3>
+          {dependentFields.map((field, fieldIndex) => {
+            return (
+              <div key={field.id} className="grid md:flex gap-4">
+                <FormInput control={control} name={`dependents.${fieldIndex}.relationship`} label="Relationship" />
+                <FormInput control={control} name={`dependents.${fieldIndex}.name`} label="Name" />
+                <hr className="md:hidden" />
+                <div className="min-w-20 flex flex-start self-end gap-x-2">
+                  {fieldIndex == dependentFields.length - 1 && (
+                    <button
+                      className="rounded-md bg-white border border-primary focus-visible:outline-none! p-1 hover:text-white hover:bg-blue-600 text-primary size-9 grid justify-center content-center"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        append(NEW_DEPENDENT)
+                      }}
+                    >
+                      <IconPlus width={25} height={25} strokeWidth={3} />
+                    </button>
+                  )}
+                  {fieldIndex != 0 && (
+                    <button
+                      className="hover:bg-blue-600 rounded-md bg-white border border-destructive focus-visible:outline-none! p-1 hover:text-white text-destructive size-9 grid justify-center content-center"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        remove(fieldIndex)
+                      }}
+                    >
+                      <IconTrashFilled width={20} height={20} strokeWidth={1} />
+                    </button>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+        <hr />
+        <div className="flex flex-wrap justify-end flex-col-reverse md:flex-row gap-8">
+          <Button type="submit" variant="contained" className="w-80 justify-self-end">
+            Next
+          </Button>
+          <Button variant="outlined" className="w-80 justify-self-end" onClick={handleBack}>
+            Back
+          </Button>
+        </div>
+      </form>
+    </div>
+  )
 }

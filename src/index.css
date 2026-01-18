@@ -26,4 +26,10 @@
   .desktopView {
     @apply max-w-screen-sm md:max-w-3xl px-2 xl:px-0 lg:max-w-5xl md:mx-auto;
   }
+  .addClassName {
+    @apply rounded-md bg-gray-500 border border-primary focus-visible:outline-none! p-1 hover:text-white hover:bg-blue-600 text-primary size-9 grid justify-center content-center;
+  }
+  .deleteClassName {
+    @apply hover:bg-destructive rounded-md bg-gray-500 border border-destructive focus-visible:outline-none! p-1 hover:text-white text-destructive size-9 grid justify-center content-center;
+  }
 }

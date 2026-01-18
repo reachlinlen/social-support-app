@@ -3,8 +3,12 @@ import { SelectStageForm } from './select-stage-form'
 
 export function SocialSecurityApplication() {
   return (
-    <StageProvider>
-      <SelectStageForm />
-    </StageProvider>
+    <>
+      <h1 className="hidden md:block">Social Support Application</h1>
+      <h2 className="md:hidden">Social Support Application</h2>
+      <StageProvider>
+        <SelectStageForm />
+      </StageProvider>
+    </>
   )
 }
