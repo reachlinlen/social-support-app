@@ -3,7 +3,7 @@ import { Button } from '@mui/material'
 import { IconPlus, IconTrashFilled } from '@tabler/icons-react'
 
 import { FormSelect } from '../../ui/designsystem/Select'
-import { useStage } from '../../utils/stage'
+import { useStage } from '../../utils/setup/stage'
 import type { IFormFamilyFinancialInfoType } from './family-financial.types'
 import { EmploymentStatus, HousingStatus, MaritalStatus, NEW_DEPENDENT } from './family-financial.service'
 import { FormInput } from '../../ui/designsystem/Input'

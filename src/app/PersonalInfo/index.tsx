@@ -6,9 +6,11 @@ import { FormDesktopDate, FormMobileDate } from '../../ui/designsystem/DatePicke
 import { FormSelect } from '../../ui/designsystem/Select'
 import { Gender } from './personal-info.service'
 import type { IFormPersonalInfoType } from './personal-info.types'
-import { useStage } from '../../utils/stage'
+import { useStage } from '../../utils/setup/stage'
+import { useTranslation } from 'react-i18next'
 
 export function PersonalInfoForm() {
+  const { t } = useTranslation()
   const {
     control,
     handleSubmit,
@@ -35,11 +37,11 @@ export function PersonalInfoForm() {
   }
   return (
     <div className="desktopView">
-      <h2 className="mt-8">Personal Information</h2>
+      <h2 className="mt-4">Personal Information</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="grid justify-evenly md:justify-start my-12 gap-y-8">
-        <FormInput control={control} name="name" label="Name" />
+        <FormInput control={control} name="name" label={t('person_name')} />
         <div className="grid md:flex md:flex-wrap gap-6">
-          <FormInput control={control} name="national_id" label="National ID" />
+          <FormInput control={control} name="national_id" label={t('national_id')} />
           <FormDesktopDate control={control} name="date_of_birth" label="Date of Birth" />
           <FormMobileDate control={control} name="date_of_birth" label="Date of Birth" />
           <FormSelect control={control} id="select-gender" name="gender" label="Gender" items={Gender} />

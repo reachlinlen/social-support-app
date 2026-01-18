@@ -4,7 +4,7 @@ import { Button } from '@mui/material'
 import { FormTextArea } from '../../ui/designsystem/Input'
 import { HelpMeWrite } from './HelpMeWrite'
 import type { SituationsDescriptionsType } from './situation-descriptions.types'
-import { useStage } from '../../utils/stage'
+import { useStage } from '../../utils/setup/stage'
 
 export function SituationDescriptions() {
   const { setStage } = useStage()
