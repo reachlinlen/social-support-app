@@ -12,7 +12,6 @@ export function LatestResponse({
   handleAccept: (a: string) => void
   handleClose: () => void
 }) {
-  console.log({ response })
   const { control, handleSubmit } = useForm<{ response: string }>({
     defaultValues: {
       response,

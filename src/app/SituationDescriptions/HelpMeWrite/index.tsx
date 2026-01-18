@@ -5,43 +5,58 @@ import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { FormTextArea } from '../../../ui/designsystem/Input'
 import { callAPI } from '../situation-description.service'
 import { LatestResponse } from './latest-response'
+import type { AIInteractionType } from '../situation-descriptions.types'
 
-export function HelpMeWrite({ handleAccept }: { handleAccept: (acceptedResponse: string) => void }) {
+export function HelpMeWrite({
+  type,
+  handleAccept,
+}: {
+  type: string
+  handleAccept: (acceptedResponse: string) => void
+}) {
   const [open, setOpen] = useState(false)
   const [latestResponse, setLatestResponse] = useState<string | undefined>(undefined)
-  const [interaction, setInteraction] = useState<
-    {
-      prompt: string
-      response: string
-    }[]
-  >([])
-  const { control, handleSubmit } = useForm<{ prompt: string }>({
+  const [AIInteractionHistory, setAIInteractionHistory] = useState<AIInteractionType>({
+    current_financial_situation: [],
+    employment_circumstances: [],
+    reason_for_applying: [],
+  })
+  const { control, handleSubmit, setValue } = useForm<{ prompt: string }>({
     defaultValues: {
       prompt: '',
     },
     mode: 'onChange',
   })
+
   const handleClickOpen = () => {
     setOpen(true)
   }
   const handleClose = () => {
-    // onClose(selectedValue);
+    setValue('prompt', '', {
+      shouldValidate: true,
+      shouldDirty: true,
+    })
     setOpen(false)
   }
 
   const handleAcceptClick = (acceptedResponse: string) => {
     setOpen(false)
+    setLatestResponse(undefined)
+    setValue('prompt', '', {
+      shouldValidate: true,
+      shouldDirty: true,
+    })
     handleAccept(acceptedResponse)
   }
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const response = await callAPI(data.prompt)
     if (response) {
-      interaction.push({
+      AIInteractionHistory[type].push({
         prompt: data.prompt,
         response,
       })
-      setInteraction([...interaction])
+      setAIInteractionHistory({ ...AIInteractionHistory })
       setLatestResponse(response)
     }
   }
@@ -52,7 +67,7 @@ export function HelpMeWrite({ handleAccept }: { handleAccept: (acceptedResponse:
         <div className="desktopView">
           {/* Old Prompts & their responses */}
           <div className="grid gap-8">
-            {interaction.map((interaction) => {
+            {AIInteractionHistory[type].map((interaction) => {
               return (
                 <div key={interaction.prompt} className="max-w-5/6">
                   <Paper elevation={1}>
