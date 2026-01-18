@@ -42,8 +42,8 @@ export function PersonalInfoForm() {
         <FormInput control={control} name="name" label={t('person_name')} />
         <div className="grid md:flex md:flex-wrap gap-6">
           <FormInput control={control} name="national_id" label={t('national_id')} />
-          <FormDesktopDate control={control} name="date_of_birth" label="Date of Birth" />
-          <FormMobileDate control={control} name="date_of_birth" label="Date of Birth" />
+          <FormDesktopDate control={control} name="date_of_birth" label={t('dob')} />
+          <FormMobileDate control={control} name="date_of_birth" label={t('dob')} />
           <FormSelect control={control} id="select-gender" name="gender" label="Gender" items={Gender} />
         </div>
         <div className="grid lg:flex gap-6">
@@ -60,7 +60,7 @@ export function PersonalInfoForm() {
         </div>
         <hr />
         <Button type="submit" variant="contained" className="w-80 justify-self-end">
-          Next
+          {t('next')}
         </Button>
       </form>
     </div>

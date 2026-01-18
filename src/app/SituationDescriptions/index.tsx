@@ -1,5 +1,6 @@
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 import { Button } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 import { FormTextArea } from '../../ui/designsystem/Input'
 import { HelpMeWrite } from './HelpMeWrite'
@@ -8,6 +9,7 @@ import { useStage } from '../../utils/setup/stage'
 
 export function SituationDescriptions() {
   const { setStage } = useStage()
+  const { t } = useTranslation()
   const { control, handleSubmit, setValue } = useForm<SituationsDescriptionsType>({
     defaultValues: {
       current_financial_situation: '',
@@ -88,10 +90,10 @@ export function SituationDescriptions() {
         <hr className="hidden md:block" />
         <div className="flex flex-wrap justify-end flex-col-reverse md:flex-row gap-8">
           <Button type="submit" variant="contained" className="w-80 justify-self-end">
-            Save
+            {t('save')}
           </Button>
           <Button variant="outlined" className="w-80 justify-self-end" onClick={handleBack}>
-            Back
+            {t('back')}
           </Button>
         </div>
       </form>
