@@ -87,7 +87,13 @@ export function SituationDescriptions() {
     <div className="desktopView">
       <h2 className="hidden md:block mt-8">Situation Descriptions</h2>
       <h3 className="block md:hidden mt-8 text-center">Situation Descriptions</h3>
-      <form onSubmit={handleSubmit(onSubmit)} className="grid space-y-6 mt-4 md:mt-8">
+      <form
+        onSubmit={(e) => {
+          e.stopPropagation()
+          handleSubmit(onSubmit)
+        }}
+        className="grid space-y-6 mt-4 md:mt-8"
+      >
         <div className="grid md:flex gap-4 items-end">
           <FormTextArea
             control={control}

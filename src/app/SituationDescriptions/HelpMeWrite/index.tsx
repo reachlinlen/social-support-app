@@ -21,7 +21,7 @@ export function HelpMeWrite({
     'Employment Circumstances': [],
     'Reason for Applying': [],
   })
-  const { control, handleSubmit, setValue } = useForm<{ prompt: string }>({
+  const { control, handleSubmit, setValue, formState } = useForm<{ prompt: string }>({
     defaultValues: {
       prompt: '',
     },
@@ -88,7 +88,12 @@ export function HelpMeWrite({
                 rows={3}
                 className={'min-w-5/6'}
               />
-              <Button type="submit" variant="outlined" className="min-w-20 max-w-20 h-9 self-end">
+              <Button
+                type="submit"
+                variant="outlined"
+                className="min-w-20 max-w-20 h-9 self-end"
+                disabled={formState.isSubmitting} // To remove double submit issues
+              >
                 Ask AI
               </Button>
             </div>
