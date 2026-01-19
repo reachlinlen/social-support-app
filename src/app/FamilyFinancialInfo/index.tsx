@@ -25,12 +25,15 @@ export function FamilyFinancialInfo() {
   const { fields: dependentFields, append, remove } = useFieldArray({ name: 'dependents', control })
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log({ data })
+    const dependents = data.dependents.filter(({ relationship }: { relationship: string }) => relationship != '')
+    localStorage.setItem('family_info', JSON.stringify({ ...data, dependents }))
     setStage((previousStage) => previousStage + 1)
   }
+
   const handleBack = () => {
     setStage((previousStage) => previousStage - 1)
   }
+
   return (
     <div className="desktopView">
       <h2 className="hidden md:block mt-8">Family & Financial Information</h2>
@@ -64,8 +67,13 @@ export function FamilyFinancialInfo() {
           {dependentFields.map((field, fieldIndex) => {
             return (
               <div key={field.id} className="grid md:flex gap-4">
-                <FormInput control={control} name={`dependents.${fieldIndex}.relationship`} label="Relationship" />
-                <FormInput control={control} name={`dependents.${fieldIndex}.name`} label="Name" />
+                <FormInput
+                  control={control}
+                  isRequired={false}
+                  name={`dependents.${fieldIndex}.relationship`}
+                  label="Relationship"
+                />
+                <FormInput control={control} isRequired={false} name={`dependents.${fieldIndex}.name`} label="Name" />
                 <hr className="md:hidden" />
                 <div className="min-w-20 flex flex-start self-end gap-x-2">
                   {fieldIndex == dependentFields.length - 1 && (
@@ -101,7 +109,7 @@ export function FamilyFinancialInfo() {
             {t('next')}
           </Button>
           <Button variant="outlined" className="w-80 justify-self-end" onClick={handleBack}>
-            {t('next')}
+            {t('back')}
           </Button>
         </div>
       </form>

@@ -6,6 +6,8 @@ import { FormTextArea } from '../../ui/designsystem/Input'
 import { HelpMeWrite } from './HelpMeWrite'
 import type { SituationsDescriptionsType } from './situation-descriptions.types'
 import { useStage } from '../../utils/setup/stage'
+import { appFetch } from '../../utils/setup/fetch'
+import { API } from '../../utils/constant'
 
 export function SituationDescriptions() {
   const { setStage } = useStage()
@@ -22,8 +24,18 @@ export function SituationDescriptions() {
   const handleBack = () => {
     setStage((previousStage) => previousStage - 1)
   }
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log({ data })
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const personalInfo = JSON.parse(localStorage.getItem('personal_info') ?? '')
+    const familyInfo = JSON.parse(localStorage.getItem('family_info') ?? '')
+    await appFetch({
+      url: API.application,
+      method: 'POST',
+      payLoad: JSON.stringify({
+        ...personalInfo,
+        ...familyInfo,
+        ...data,
+      }),
+    })
   }
   return (
     <div className="desktopView">

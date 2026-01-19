@@ -1,5 +1,6 @@
 import { useForm, type SubmitHandler, type FieldValues } from 'react-hook-form'
 import { Button } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 import { FormInput, FormTextArea } from '../../ui/designsystem/Input'
 import { FormDesktopDate, FormMobileDate } from '../../ui/designsystem/DatePicker'
@@ -7,7 +8,6 @@ import { FormSelect } from '../../ui/designsystem/Select'
 import { Gender } from './personal-info.service'
 import type { IFormPersonalInfoType } from './personal-info.types'
 import { useStage } from '../../utils/setup/stage'
-import { useTranslation } from 'react-i18next'
 
 export function PersonalInfoForm() {
   const { t } = useTranslation()
@@ -29,12 +29,13 @@ export function PersonalInfoForm() {
     },
     mode: 'onChange',
   })
-  // } = useForm<IFormPersonalInfoType>()
   const { setStage } = useStage()
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log({ data })
+    localStorage.setItem('personal_info', JSON.stringify({ ...data }))
     setStage((previousStage) => previousStage + 1)
   }
+
   return (
     <div className="desktopView">
       <h2 className="mt-4">Personal Information</h2>
