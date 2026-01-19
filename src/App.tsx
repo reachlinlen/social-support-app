@@ -7,7 +7,6 @@ function App() {
     createRoutesFromElements(
       <>
         <Route path="/" element={<SocialSecurityApplication />} />
-        {/* <Route path="/personalinfo" element={<SocialSecurityApplication />} /> */}
       </>
     )
   )
