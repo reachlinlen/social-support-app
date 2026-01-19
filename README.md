@@ -4,15 +4,15 @@ This is a Front end app that enables a user to submit the application for Social
 
 # Purpose & Features
 
-User has to enter all his personal data including UAE National ID, UAE Phone number. The application also collects the financial backgound, current financial status & his / her dependents. The application form has been designed to check the patterns of important information so as to reduce the instance of data error. Users also have the option of taking the assistance of AI (in this instance OpenAI) to enter their current situation. This will help them in putting a better application to get the assistance. This application has been designed to be filled and submitted in Tablets & Mobiles. Hence, there is no need for Users to have a computer system to submit the application. The application also supports Arabic language.
+User has to enter all his personal data including UAE National ID, UAE Phone number. The application also collects the financial backgound, current financial status & his / her dependents. The application form has been designed to check the patterns of important information so as to reduce the instance of data error. Users also have the option of taking the assistance of AI (in this instance OpenAI) to enter their current situation. This will help them in putting a better application to get the assistance. This application has been designed to be filled and submitted in Tablets & Mobiles also. Hence, there is no need for Users to have a computer system to submit the application. The application also supports Arabic language.
 
 # Techstack
 
 React + Vite +
 Typescript +
-Material UI (incl. Date Picker)
-React Hook Form
-React-i18next
+Material UI (incl. Date Picker) +
+React Hook Form +
+React-i18next +
 OpenAI
 
 # Steps to run the project
@@ -33,7 +33,9 @@ OpenAI
 
 # Architecture
 
-Client layer - [ReactJs](https://react.dev/) + [Typescript](https://www.typescriptlang.org/) + [Vite](https://vite.dev/) + [Tailwind CSS](https://tailwindcss.com/)
+Client layer - [ReactJs](https://react.dev/) + [Typescript](https://www.typescriptlang.org/) + [Tailwind CSS](https://tailwindcss.com/)
+
+Build Tool - [Vite](https://vite.dev/)
 
 UXE Library - [Material UI](https://mui.com/) + [Material Date Picker](https://mui.com/x/react-date-pickers/)
 
@@ -44,6 +46,22 @@ Internationalization - [react-i18next](https://react.i18next.com/)
 External Integrations - [OpenAI](https://platform.openai.com)
 
 Mock API - [Mock Service Worker](https://mswjs.io/)
+
+Component Testing - [Vitest](https://vitest.dev/)
+
+# Why?
+
+React.js - provides an efficient, scalable and flexible approach to building User Interfaces, primarily due to its component-based architecture and the use of a Virtual DOM.
+
+Typescript - primarily adds optical static typing to the language, providing significant advantages for building large-scale, robust applications.
+
+Tailwind CSS - streamlines web development process by providing a utility-first framework
+
+Vite - modern, fast frontend build tool, offering an extremely quick development experience and efficient production builds
+
+React Hook Form - provides a performant, light weight & simple solution for form management and validation
+
+MSW - standalone API mocking layer, creating a single source of truth for your network behavior and integrating it across
 
 # Future Scope
 
