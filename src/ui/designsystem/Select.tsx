@@ -12,7 +12,6 @@ export function FormSelect({
   id,
   label,
   items,
-  isRequired = true,
   className,
   rules = {},
   error,
@@ -24,7 +23,6 @@ export function FormSelect({
   items: {
     [key: string]: string
   }
-  isRequired?: boolean
   className?: string
   rules?: {
     [key: string]: string | number
@@ -35,12 +33,12 @@ export function FormSelect({
     <Controller
       name={name}
       control={control}
-      rules={{ required: isRequired, ...rules }}
+      rules={rules}
       render={({ field }) => (
-        <>
+        <div>
           <FormControl className={cn('min-w-80 max-w-80', className)}>
             <InputLabel id={id}>{label}</InputLabel>
-            <Select label={label} value={field.value} onChange={field.onChange} required={isRequired}>
+            <Select label={label} value={field.value} onChange={field.onChange} required={!!rules.required}>
               {Object.keys(items).map((k) => (
                 <MenuItem key={k} value={k}>
                   {items[k]}
@@ -49,7 +47,7 @@ export function FormSelect({
             </Select>
           </FormControl>
           <FormError label={label} error={error} />
-        </>
+        </div>
       )}
     />
   )

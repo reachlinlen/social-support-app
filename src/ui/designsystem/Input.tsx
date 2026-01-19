@@ -71,7 +71,7 @@ export function FormTextArea({
       control={control}
       rules={rules}
       render={({ field, fieldState }) => (
-        <div>
+        <div className={cn('w-full', className)}>
           <TextField
             helperText={fieldState.error?.message}
             variant="outlined"
@@ -82,7 +82,7 @@ export function FormTextArea({
             rows={rows}
             value={field.value}
             onChange={field.onChange}
-            className={cn('min-w-80 max-w-80', className)}
+            fullWidth
           />
           <FormError label={label} error={error} />
         </div>
