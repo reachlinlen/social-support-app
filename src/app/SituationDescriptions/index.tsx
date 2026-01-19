@@ -11,7 +11,7 @@ import { appFetch } from '../../utils/setup/fetch'
 import { API } from '../../utils/constant'
 
 export function SituationDescriptions() {
-  const { setStage } = useStage()
+  const { setStage, setIsFormComplete } = useStage()
   const { t } = useTranslation()
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [snackBarMsg, setSnackBarMsg] = useState('')
@@ -59,6 +59,7 @@ export function SituationDescriptions() {
       message = `New Application has been created successfully. Application Number is ${msg.application_number}.`
       localStorage.removeItem('personal_info')
       localStorage.removeItem('family_info')
+      setIsFormComplete(true)
     }
     setSnackBarMsg(message)
   }
@@ -68,7 +69,13 @@ export function SituationDescriptions() {
       <div className="desktopView">
         <div className="absolute left-1/3 top-1/3 border border-dotted p-8 grid space-y-8">
           <p>{snackBarMsg}</p>
-          <Button variant="contained" onClick={() => setStage(1)}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setStage(1)
+              setIsFormComplete(false)
+            }}
+          >
             Click here to create another application.
           </Button>
         </div>
