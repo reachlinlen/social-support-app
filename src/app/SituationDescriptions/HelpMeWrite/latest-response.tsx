@@ -1,7 +1,5 @@
-import { Button } from '@mui/material'
+import { Button, TextField } from '@mui/material'
 import { useState } from 'react'
-import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
-import { FormTextArea } from '../../../ui/designsystem/Input'
 
 export function LatestResponse({
   response,
@@ -12,41 +10,54 @@ export function LatestResponse({
   handleAccept: (a: string) => void
   handleClose: () => void
 }) {
-  const { control, handleSubmit } = useForm<{ response: string }>({
-    defaultValues: {
-      response,
-    },
-    mode: 'onChange',
-  })
+  const [newResponse, setNewResponse] = useState(response)
   const [isEdit, setIsEdit] = useState(false)
-
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    handleAccept(data.response)
-  }
 
   return (
     <div className="grid space-y-6 mt-4 md:mt-8">
-      <form onSubmit={handleSubmit(onSubmit)} className="grid space-y-6 mt-4 md:mt-8">
-        <FormTextArea
-          control={control}
-          name="response"
-          rows={5}
-          className={'min-w-5/6 mt-4'}
+      {isEdit ?
+        <TextField
+          variant="outlined"
           label="Latest AI Response"
-          disabled={!isEdit}
+          multiline
+          rows={6}
+          value={newResponse}
+          onChange={(e) => setNewResponse(e.target.value)}
+          fullWidth
         />
-        <div className="flex flex-col gap-4 sm:flex-row">
-          <Button type="submit" variant="contained" className="w-20">
-            ACCEPT
-          </Button>
-          <Button variant="outlined" onClick={() => setIsEdit(true)} className="w-20">
-            EDIT
-          </Button>
-          <Button variant="outlined" onClick={handleClose} className="w-20">
-            DISCARD
-          </Button>
-        </div>
-      </form>
+      : <p>{response}</p>}
+      <div className="flex gap-4 flex-row flex-wrap">
+        <Button
+          variant="contained"
+          className="w-20"
+          onClick={(e) => {
+            e.preventDefault()
+            handleAccept(response)
+          }}
+        >
+          ACCEPT
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={(e) => {
+            e.preventDefault()
+            setIsEdit(true)
+          }}
+          className="w-20"
+        >
+          EDIT
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={(e) => {
+            e.preventDefault()
+            handleClose()
+          }}
+          className="w-20"
+        >
+          DISCARD
+        </Button>
+      </div>
     </div>
   )
 }
