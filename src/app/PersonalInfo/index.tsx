@@ -1,7 +1,8 @@
 import { useForm, type SubmitHandler, type FieldValues } from 'react-hook-form'
 import { Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
+import { useEffect } from 'react'
 
 import { FormInput, FormTextArea } from '../../ui/designsystem/Input'
 import { FormDesktopDate, FormMobileDate } from '../../ui/designsystem/DatePicker'
@@ -9,7 +10,6 @@ import { FormSelect } from '../../ui/designsystem/Select'
 import { Gender } from './personal-info.service'
 import type { IFormPersonalInfoType } from './personal-info.types'
 import { useStage } from '../../utils/setup/stage'
-import { useEffect } from 'react'
 
 export function PersonalInfoForm() {
   const { t } = useTranslation()
@@ -60,24 +60,104 @@ export function PersonalInfoForm() {
     <div className="desktopView">
       <h2 className="mt-4">Personal Information</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="grid justify-evenly md:justify-start my-12 gap-y-8">
-        <FormInput control={control} name="name" label={t('person_name')} />
+        <FormInput
+          control={control}
+          name="name"
+          label={t('person_name')}
+          rules={{
+            required: 'Name is required',
+          }}
+          error={errors['name']}
+        />
         <div className="grid md:flex md:flex-wrap gap-6">
-          <FormInput control={control} name="national_id" label={t('national_id')} />
+          <FormInput
+            control={control}
+            name="national_id"
+            label={t('national_id')}
+            rules={{
+              required: 'National ID is required',
+              pattern: {
+                value: /^784-?\d{4}-?\d{7}-?\d{1}$/g,
+                message: 'Invalid pattern',
+              },
+            }}
+            error={errors['national_id']}
+          />
           <FormDesktopDate control={control} name="date_of_birth" label={t('dob')} />
           <FormMobileDate control={control} name="date_of_birth" label={t('dob')} />
-          <FormSelect control={control} id="select-gender" name="gender" label="Gender" items={Gender} />
+          <FormSelect
+            control={control}
+            id="select-gender"
+            name="gender"
+            label="Gender"
+            items={Gender}
+            rules={{
+              required: 'Gender is required',
+            }}
+            error={errors['gender']}
+          />
         </div>
         <div className="grid lg:flex gap-6">
-          <FormTextArea control={control} name="address" label="Address" rows={6} />
+          <FormTextArea
+            control={control}
+            name="address"
+            label="Address"
+            rows={6}
+            rules={{
+              required: 'Name is required',
+            }}
+            error={errors['name']}
+          />
           <div className="grid md:flex md:flex-wrap gap-6">
-            <FormInput control={control} name="city" label="City" />
-            <FormInput control={control} name="state" label="State" />
-            <FormInput control={control} name="country" label="Country" />
+            <FormInput
+              control={control}
+              name="city"
+              label="City"
+              rules={{
+                required: 'City is required',
+              }}
+              error={errors['city']}
+            />
+            <FormInput
+              control={control}
+              name="state"
+              label="State"
+              rules={{
+                required: 'State is required',
+              }}
+              error={errors['state']}
+            />
+            <FormInput
+              control={control}
+              name="country"
+              label="Country"
+              rules={{
+                required: 'Country is required',
+              }}
+              error={errors['country']}
+            />
           </div>
         </div>
         <div className="grid md:flex gap-6">
-          <FormInput control={control} name="phone" label="Phone" />
-          <FormInput control={control} name="email" label="EMail" />
+          <FormInput
+            control={control}
+            name="phone"
+            label="Phone"
+            rules={{
+              required: 'Phone is required',
+            }}
+            error={errors['phone']}
+          />
+          <FormInput
+            control={control}
+            name="email"
+            label="EMail"
+            type="email"
+            rules={{
+              required: 'EMail is required',
+            }}
+            error={errors['email']}
+          />
         </div>
         <hr />
         <Button type="submit" variant="contained" className="w-80 justify-self-end">
