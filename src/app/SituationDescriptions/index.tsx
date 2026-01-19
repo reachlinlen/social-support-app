@@ -1,6 +1,7 @@
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
-import { Button } from '@mui/material'
+import { Alert, Button, Snackbar } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 
 import { FormTextArea } from '../../ui/designsystem/Input'
 import { HelpMeWrite } from './HelpMeWrite'
@@ -12,6 +13,8 @@ import { API } from '../../utils/constant'
 export function SituationDescriptions() {
   const { setStage } = useStage()
   const { t } = useTranslation()
+  const [showSnackbar, setShowSnackbar] = useState(false)
+  const [snackBarMsg, setSnackBarMsg] = useState('')
   const { control, handleSubmit, setValue } = useForm<SituationsDescriptionsType>({
     defaultValues: {
       current_financial_situation: '',
@@ -24,10 +27,11 @@ export function SituationDescriptions() {
   const handleBack = () => {
     setStage((previousStage) => previousStage - 1)
   }
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const personalInfo = JSON.parse(localStorage.getItem('personal_info') ?? '')
     const familyInfo = JSON.parse(localStorage.getItem('family_info') ?? '')
-    await appFetch({
+    const resp = await appFetch({
       url: API.application,
       method: 'POST',
       payLoad: JSON.stringify({
@@ -36,7 +40,37 @@ export function SituationDescriptions() {
         ...data,
       }),
     })
+    // handle response
+    let message = ''
+    if ((resp as { error: Error }).error) {
+      message = `ERROR: ${(resp as { error: Error }).error.message}`
+      setShowSnackbar(true)
+      setTimeout(() => {
+        setShowSnackbar(false)
+        setSnackBarMsg('')
+      }, 3000)
+    } else {
+      const msg = await (resp as Response).json()
+      message = `New Application has been created successfully. Application Number is ${msg.application_number}.`
+      localStorage.removeItem('personal_info')
+      localStorage.removeItem('family_info')
+    }
+    setSnackBarMsg(message)
   }
+
+  if (!showSnackbar && snackBarMsg) {
+    return (
+      <div className="desktopView">
+        <div className="absolute left-1/3 top-1/3 border border-dotted p-8 grid space-y-8">
+          <p>{snackBarMsg}</p>
+          <Button variant="contained" onClick={() => setStage(1)}>
+            Click here to create another application.
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="desktopView">
       <h2 className="hidden md:block mt-8">Situation Descriptions</h2>
@@ -109,6 +143,18 @@ export function SituationDescriptions() {
           </Button>
         </div>
       </form>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={showSnackbar}
+        // message={snackBarMsg}
+        // slotProps={{
+        //   content: {
+        //     className: 'bg-red-500 text-white text-xl',
+        //   },
+        // }}
+      >
+        <Alert severity="error">{snackBarMsg}</Alert>
+      </Snackbar>
     </div>
   )
 }

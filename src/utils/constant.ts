@@ -1,3 +1,5 @@
+import { url } from './setup/url.config'
+
 export const lngs: {
   [key: string]: {
     nativeName: string
@@ -8,5 +10,7 @@ export const lngs: {
 }
 
 export const API = {
-  application: 'https://ss.gov.ae',
+  application: `${url}/rest/v1/application`,
 }
+
+export const ERROR_EMAIL = 'a@a.com'
