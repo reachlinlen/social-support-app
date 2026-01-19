@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 
 import { FormTextArea } from '../../../ui/designsystem/Input'
-import { callAPI } from '../situation-description.service'
+import { callOpenAI } from '../situation-description.service'
 import { LatestResponse } from './latest-response'
 import type { AIInteractionType } from '../situation-descriptions.types'
 
@@ -50,7 +50,7 @@ export function HelpMeWrite({
   }
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const response = await callAPI(data.prompt)
+    const response = await callOpenAI(data.prompt)
     if (response) {
       AIInteractionHistory[type].push({
         prompt: data.prompt,

@@ -167,16 +167,7 @@ export function SituationDescriptions() {
           </Button>
         </div>
       </form>
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={showSnackbar}
-        // message={snackBarMsg}
-        // slotProps={{
-        //   content: {
-        //     className: 'bg-red-500 text-white text-xl',
-        //   },
-        // }}
-      >
+      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} open={showSnackbar}>
         <Alert severity="error">{snackBarMsg}</Alert>
       </Snackbar>
     </div>
