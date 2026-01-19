@@ -35,7 +35,7 @@ export function LatestResponse({
           label="Latest AI Response"
           disabled={!isEdit}
         />
-        <div className="flex flex-col gap-4 md:flex-row">
+        <div className="flex flex-col gap-4 sm:flex-row">
           <Button type="submit" variant="contained" className="w-20">
             ACCEPT
           </Button>
