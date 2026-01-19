@@ -6,6 +6,7 @@ import { FormTextArea } from '../../../ui/designsystem/Input'
 import { callOpenAI } from '../situation-description.service'
 import { LatestResponse } from './latest-response'
 import type { AIInteractionType } from '../situation-descriptions.types'
+import { SITUATIONS } from '../../../utils/constant'
 
 export function HelpMeWrite({
   type,
@@ -17,9 +18,9 @@ export function HelpMeWrite({
   const [open, setOpen] = useState(false)
   const [latestResponse, setLatestResponse] = useState<string | undefined>(undefined)
   const [AIInteractionHistory, setAIInteractionHistory] = useState<AIInteractionType>({
-    'Current Financial Situation': [],
-    'Employment Circumstances': [],
-    'Reason for Applying': [],
+    [SITUATIONS.CURRENT_FINANCIAL]: [],
+    [SITUATIONS.EMPLOYMENT]: [],
+    [SITUATIONS.REASON]: [],
   })
   const { control, handleSubmit, setValue, formState } = useForm<{ prompt: string }>({
     defaultValues: {
@@ -79,7 +80,7 @@ export function HelpMeWrite({
             })}
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="grid space-y-6 mt-4 md:mt-8">
-            <div className="flex gap-x-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               <FormTextArea
                 control={control}
                 name="prompt"
