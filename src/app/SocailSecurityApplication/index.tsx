@@ -18,6 +18,7 @@ export function SocialSecurityApplication() {
             variant={i18n.language == lng ? 'contained' : 'text'}
             onClick={() => {
               i18n.changeLanguage(lng)
+              document.dir = i18n.dir()
             }}
           >
             {lngs[lng].nativeName}
