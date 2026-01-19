@@ -58,7 +58,7 @@ export function PersonalInfoForm() {
 
   return (
     <div className="desktopView">
-      <h2 className="mt-4">Personal Information</h2>
+      <h2 className="mt-4">{t('personal_information')}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="grid justify-evenly md:justify-start my-12 gap-y-8">
         <FormInput
           control={control}
@@ -89,7 +89,7 @@ export function PersonalInfoForm() {
             control={control}
             id="select-gender"
             name="gender"
-            label="Gender"
+            label={t('gender')}
             items={Gender}
             rules={{
               required: 'Gender is required',
@@ -101,7 +101,7 @@ export function PersonalInfoForm() {
           <FormTextArea
             control={control}
             name="address"
-            label="Address"
+            label={t('address')}
             rows={6}
             rules={{
               required: 'Name is required',
@@ -112,7 +112,7 @@ export function PersonalInfoForm() {
             <FormInput
               control={control}
               name="city"
-              label="City"
+              label={t('city')}
               rules={{
                 required: 'City is required',
               }}
@@ -121,7 +121,7 @@ export function PersonalInfoForm() {
             <FormInput
               control={control}
               name="state"
-              label="State"
+              label={t('state')}
               rules={{
                 required: 'State is required',
               }}
@@ -130,7 +130,7 @@ export function PersonalInfoForm() {
             <FormInput
               control={control}
               name="country"
-              label="Country"
+              label={t('country')}
               rules={{
                 required: 'Country is required',
               }}
@@ -142,7 +142,7 @@ export function PersonalInfoForm() {
           <FormInput
             control={control}
             name="phone"
-            label="Phone"
+            label={t('phone')}
             rules={{
               required: 'Phone is required',
               pattern: {
@@ -155,7 +155,7 @@ export function PersonalInfoForm() {
           <FormInput
             control={control}
             name="email"
-            label="EMail"
+            label={t('email')}
             type="email"
             rules={{
               required: 'EMail is required',

@@ -8,7 +8,7 @@ import { HelpMeWrite } from './HelpMeWrite'
 import type { SituationsDescriptionsType } from './situation-descriptions.types'
 import { useStage } from '../../utils/setup/stage'
 import { appFetch } from '../../utils/setup/fetch'
-import { API } from '../../utils/constant'
+import { API, SITUATIONS } from '../../utils/constant'
 
 export function SituationDescriptions() {
   const { setStage, setIsFormComplete } = useStage()
@@ -84,21 +84,15 @@ export function SituationDescriptions() {
   }
 
   return (
-    <div className="desktopView">
+    <div className="desktopView mb-4">
       <h2 className="hidden md:block mt-8">Situation Descriptions</h2>
-      <h3 className="block md:hidden mt-8 text-center">Situation Descriptions</h3>
-      <form
-        onSubmit={(e) => {
-          e.stopPropagation()
-          handleSubmit(onSubmit)
-        }}
-        className="grid space-y-6 mt-4 md:mt-8"
-      >
+      <h3 className="block md:hidden mt-3 text-center">Situation Descriptions</h3>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid space-y-6 mt-4 md:mt-8">
         <div className="grid md:flex gap-4 items-end">
           <FormTextArea
             control={control}
             name="current_financial_situation"
-            label="Current Financial Situation"
+            label={SITUATIONS.CURRENT_FINANCIAL}
             className="w-full md:w-2/3"
             rows={5}
             rules={{
@@ -107,7 +101,7 @@ export function SituationDescriptions() {
             error={errors['current_financial_situation']}
           />
           <HelpMeWrite
-            type="Current Financial Situation"
+            type={SITUATIONS.CURRENT_FINANCIAL}
             handleAccept={(acceptedResponse: string) => {
               setValue('current_financial_situation', acceptedResponse, {
                 shouldValidate: true,
@@ -121,7 +115,7 @@ export function SituationDescriptions() {
           <FormTextArea
             control={control}
             name="employment_circumstances"
-            label="Employment Circumstances"
+            label={SITUATIONS.EMPLOYMENT}
             className="w-full md:w-2/3"
             rows={5}
             rules={{
@@ -130,7 +124,7 @@ export function SituationDescriptions() {
             error={errors['employment_circumstances']}
           />
           <HelpMeWrite
-            type="Employment Circumstances"
+            type={SITUATIONS.EMPLOYMENT}
             handleAccept={(acceptedResponse: string) => {
               setValue('employment_circumstances', acceptedResponse, {
                 shouldValidate: true,
@@ -144,7 +138,7 @@ export function SituationDescriptions() {
           <FormTextArea
             control={control}
             name="reason_for_applying"
-            label="Reason For Applying"
+            label={SITUATIONS.REASON}
             className="w-full md:w-2/3"
             rows={5}
             rules={{
@@ -153,7 +147,7 @@ export function SituationDescriptions() {
             error={errors['reason_for_applying']}
           />
           <HelpMeWrite
-            type="Reason For Applying"
+            type={SITUATIONS.REASON}
             handleAccept={(acceptedResponse: string) => {
               setValue('reason_for_applying', acceptedResponse, {
                 shouldValidate: true,
@@ -164,9 +158,9 @@ export function SituationDescriptions() {
           <hr className="md:hidden" />
         </div>
         <hr className="hidden md:block" />
-        <div className="flex flex-wrap mx-auto justify-end flex-col-reverse md:flex-row gap-8">
+        <div className="flex flex-wrap mx-auto justify-end flex-col-reverse md:flex-row gap-4 md:gap-8">
           <Button type="submit" variant="contained" className="w-80 justify-self-end">
-            {t('save')}
+            {t('submit')}
           </Button>
           <Button variant="outlined" className="w-80 justify-self-end" onClick={handleBack}>
             {t('back')}

@@ -14,3 +14,9 @@ export const API = {
 }
 
 export const ERROR_EMAIL = 'a@a.com'
+
+export const SITUATIONS = {
+  CURRENT_FINANCIAL: 'Current Financial Situation',
+  EMPLOYMENT: 'Employment Circumstances',
+  REASON: 'Reason for Applying',
+}
