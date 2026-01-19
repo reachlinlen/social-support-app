@@ -1,7 +1,8 @@
 import { useForm, type SubmitHandler, type FieldValues } from 'react-hook-form'
 import { Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
+import { useEffect } from 'react'
 
 import { FormInput, FormTextArea } from '../../ui/designsystem/Input'
 import { FormDesktopDate, FormMobileDate } from '../../ui/designsystem/DatePicker'
@@ -9,7 +10,6 @@ import { FormSelect } from '../../ui/designsystem/Select'
 import { Gender } from './personal-info.service'
 import type { IFormPersonalInfoType } from './personal-info.types'
 import { useStage } from '../../utils/setup/stage'
-import { useEffect } from 'react'
 
 export function PersonalInfoForm() {
   const { t } = useTranslation()
@@ -62,7 +62,19 @@ export function PersonalInfoForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="grid justify-evenly md:justify-start my-12 gap-y-8">
         <FormInput control={control} name="name" label={t('person_name')} />
         <div className="grid md:flex md:flex-wrap gap-6">
-          <FormInput control={control} name="national_id" label={t('national_id')} />
+          <FormInput
+            control={control}
+            name="national_id"
+            label={t('national_id')}
+            rules={{
+              required: 'National ID is required',
+              pattern: {
+                value: /^784-?\d{4}-?\d{7}-?\d{1}$/g,
+                message: 'Invalid pattern',
+              },
+            }}
+            error={errors['national_id']}
+          />
           <FormDesktopDate control={control} name="date_of_birth" label={t('dob')} />
           <FormMobileDate control={control} name="date_of_birth" label={t('dob')} />
           <FormSelect control={control} id="select-gender" name="gender" label="Gender" items={Gender} />
@@ -77,7 +89,7 @@ export function PersonalInfoForm() {
         </div>
         <div className="grid md:flex gap-6">
           <FormInput control={control} name="phone" label="Phone" />
-          <FormInput control={control} name="email" label="EMail" />
+          <FormInput control={control} name="email" label="EMail" type="email" />
         </div>
         <hr />
         <Button type="submit" variant="contained" className="w-80 justify-self-end">
