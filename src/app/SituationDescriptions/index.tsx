@@ -66,8 +66,8 @@ export function SituationDescriptions() {
 
   if (!showSnackbar && snackBarMsg) {
     return (
-      <div className="desktopView">
-        <div className="absolute left-1/3 top-1/3 border border-dotted p-8 grid space-y-8">
+      <div className="absolute w-full mx-auto">
+        <div className="w-11/12 mx-auto lg:w-3xl p-2 mt-40 border border-dotted lg:p-8 grid space-y-8 text-center">
           <p>{snackBarMsg}</p>
           <Button
             variant="contained"
@@ -158,7 +158,7 @@ export function SituationDescriptions() {
           <hr className="md:hidden" />
         </div>
         <hr className="hidden md:block" />
-        <div className="flex flex-wrap justify-end flex-col-reverse md:flex-row gap-8">
+        <div className="flex flex-wrap mx-auto justify-end flex-col-reverse md:flex-row gap-8">
           <Button type="submit" variant="contained" className="w-80 justify-self-end">
             {t('save')}
           </Button>

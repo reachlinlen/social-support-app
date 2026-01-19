@@ -9,8 +9,8 @@ export function SocialSecurityApplication() {
   const { t, i18n } = useTranslation()
   return (
     <>
-      <h1 className="hidden md:block">{t('application_title')}</h1>
-      <h2 className="md:hidden">{t('application_title')}</h2>
+      <h1 className="hidden md:block mt-8">{t('application_title')}</h1>
+      <h2 className="md:hidden mt-4">{t('application_title')}</h2>
       <div className="desktopView mx-auto flex justify-end mt-2">
         {Object.keys(lngs).map((lng) => (
           <Button
