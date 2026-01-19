@@ -2,13 +2,13 @@ import { useForm, type SubmitHandler, type FieldValues, useFieldArray } from 're
 import { Button } from '@mui/material'
 import { IconPlus, IconTrashFilled } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 import { FormSelect } from '../../ui/designsystem/Select'
 import { useStage } from '../../utils/setup/stage'
 import type { IFormFamilyFinancialInfoType } from './family-financial.types'
 import { EmploymentStatus, HousingStatus, MaritalStatus, NEW_DEPENDENT } from './family-financial.service'
 import { FormInput } from '../../ui/designsystem/Input'
-import { useEffect } from 'react'
 
 export function FamilyFinancialInfo() {
   const { setStage } = useStage()
