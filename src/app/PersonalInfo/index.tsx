@@ -1,5 +1,7 @@
 import { useForm, type SubmitHandler, type FieldValues } from 'react-hook-form'
 import { Button } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import dayjs, { Dayjs } from 'dayjs'
 
 import { FormInput, FormTextArea } from '../../ui/designsystem/Input'
 import { FormDesktopDate, FormMobileDate } from '../../ui/designsystem/DatePicker'
@@ -7,18 +9,20 @@ import { FormSelect } from '../../ui/designsystem/Select'
 import { Gender } from './personal-info.service'
 import type { IFormPersonalInfoType } from './personal-info.types'
 import { useStage } from '../../utils/setup/stage'
-import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 export function PersonalInfoForm() {
   const { t } = useTranslation()
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IFormPersonalInfoType>({
     defaultValues: {
       name: '',
       national_id: '',
+      date_of_birth: dayjs(undefined), // dayjs(new Date().toISOString().slice(0, 10)),
       gender: '',
       address: '',
       city: '',
@@ -29,12 +33,29 @@ export function PersonalInfoForm() {
     },
     mode: 'onChange',
   })
-  // } = useForm<IFormPersonalInfoType>()
   const { setStage } = useStage()
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log({ data })
+    localStorage.setItem('personal_info', JSON.stringify({ ...data }))
     setStage((previousStage) => previousStage + 1)
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('personal_info')) {
+      const info = JSON.parse(localStorage.getItem('personal_info'))
+      setValue('name', info.name)
+      setValue('national_id', info.national_id)
+      setValue('gender', info.gender)
+      setValue('date_of_birth', dayjs(new Date(info.date_of_birth).toString()))
+      setValue('address', info.address)
+      setValue('city', info.city)
+      setValue('state', info.state)
+      setValue('country', info.country)
+      setValue('phone', info.phone)
+      setValue('email', info.email)
+    }
+  }, [setValue])
+
   return (
     <div className="desktopView">
       <h2 className="mt-4">Personal Information</h2>
