@@ -1,73 +1,51 @@
-# React + TypeScript + Vite
+# Social Security Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a Front end app that enables a user to submit the application for Social Security.
 
-Currently, two official plugins are available:
+# Purpose & Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+User has to enter all his personal data including UAE National ID, UAE Phone number. The application also collects the financial backgound, current financial status & his / her dependents. The application form has been designed to check the patterns of important information so as to reduce the instance of data error. Users also have the option of taking the assistance of AI (in this instance OpenAI) to enter their current situation. This will help them in putting a better application to get the assistance. This application has been designed to be filled and submitted in Tablets & Mobiles. Hence, there is no need for Users to have a computer system to submit the application. The application also supports Arabic language.
 
-## React Compiler
+# Techstack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React
+Vite
+Typescript
+Material UI (incl. Date Picker)
+React Hook Form
+React-i18next
+OpenAI
 
-## Expanding the ESLint configuration
+# Steps to run the project
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Go to root folder and run [npm install] to install the dependencies
+2. Run [npm start] or [npm run dev] to run the application
+3. Access the application at [http://localhost:5173/] in your browser. Best supported in [Chrome] / [Firefox]
+4. If you're unable to access the app at [http://localhost:5173/], you may running another app in the same port. Do check the command line to fetch the correct port
+5. This app required OpenAI access to complete the form. Please check the steps mentioned to get OpenAI API Key.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Steps to get OpenAI API Key
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Please create an account in [OpenAI](https://platform.openai.com), if you do not have a OpenAI Account already.
+- After creating the account, please navigate to [Billing](https://platform.openai.com/settings/organization/billing/overview) on the left hand side menu and click [‘Add to credit balance’] to add credit.
+- On the same menu list, on the top you can see link to [‘API keys’]. On the same page, click [‘Create new secret key’] button to create a new API Key.
+- Please copy and add [VITE_OPENAI_KEY={apiKey created}] in .env file.
+- Since env file is git ignored, the secret is not stored in git. Hence, please do not save secret keys in any other files as the secrets may be accidentally shared with others.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# Architecture
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Client layer - [ReactJs](https://react.dev/) + [Typescript](https://www.typescriptlang.org/) + [Vite](https://vite.dev/) + [Tailwind CSS](https://tailwindcss.com/)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+UXE Library - [Material UI](https://mui.com/) + [Material Date Picker](https://mui.com/x/react-date-pickers/)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Form - [React Hook Form](https://react-hook-form.com/)
+
+Internationalization - [react-i18next](https://react.i18next.com/)
+
+External Integrations - [OpenAI](https://platform.openai.com)
+
+Mock API - [Mock Service Worker](https://mswjs.io/)
+
+# Future Scope
+
+The application can be scaled to include Authentication, Application Tracking / Edit / Abandon.

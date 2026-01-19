@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form'
 
 import { FormTextArea } from '../../../ui/designsystem/Input'
-import { callAPI } from '../situation-description.service'
+import { callOpenAI } from '../situation-description.service'
 import { LatestResponse } from './latest-response'
 import type { AIInteractionType } from '../situation-descriptions.types'
 
@@ -21,7 +21,7 @@ export function HelpMeWrite({
     'Employment Circumstances': [],
     'Reason for Applying': [],
   })
-  const { control, handleSubmit, setValue } = useForm<{ prompt: string }>({
+  const { control, handleSubmit, setValue, formState } = useForm<{ prompt: string }>({
     defaultValues: {
       prompt: '',
     },
@@ -50,7 +50,7 @@ export function HelpMeWrite({
   }
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const response = await callAPI(data.prompt)
+    const response = await callOpenAI(data.prompt)
     if (response) {
       AIInteractionHistory[type].push({
         prompt: data.prompt,
@@ -88,7 +88,12 @@ export function HelpMeWrite({
                 rows={3}
                 className={'min-w-5/6'}
               />
-              <Button type="submit" variant="outlined" className="min-w-20 max-w-20 h-9 self-end">
+              <Button
+                type="submit"
+                variant="outlined"
+                className="min-w-20 max-w-20 h-9 self-end"
+                disabled={formState.isSubmitting} // To remove double submit issues
+              >
                 Ask AI
               </Button>
             </div>

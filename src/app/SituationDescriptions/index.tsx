@@ -11,7 +11,7 @@ import { appFetch } from '../../utils/setup/fetch'
 import { API } from '../../utils/constant'
 
 export function SituationDescriptions() {
-  const { setStage } = useStage()
+  const { setStage, setIsFormComplete } = useStage()
   const { t } = useTranslation()
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [snackBarMsg, setSnackBarMsg] = useState('')
@@ -59,16 +59,23 @@ export function SituationDescriptions() {
       message = `New Application has been created successfully. Application Number is ${msg.application_number}.`
       localStorage.removeItem('personal_info')
       localStorage.removeItem('family_info')
+      setIsFormComplete(true)
     }
     setSnackBarMsg(message)
   }
 
   if (!showSnackbar && snackBarMsg) {
     return (
-      <div className="desktopView">
-        <div className="absolute left-1/3 top-1/3 border border-dotted p-8 grid space-y-8">
+      <div className="absolute w-full mx-auto">
+        <div className="w-11/12 mx-auto lg:w-3xl p-2 mt-40 border border-dotted lg:p-8 grid space-y-8 text-center">
           <p>{snackBarMsg}</p>
-          <Button variant="contained" onClick={() => setStage(1)}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setStage(1)
+              setIsFormComplete(false)
+            }}
+          >
             Click here to create another application.
           </Button>
         </div>
@@ -80,7 +87,13 @@ export function SituationDescriptions() {
     <div className="desktopView">
       <h2 className="hidden md:block mt-8">Situation Descriptions</h2>
       <h3 className="block md:hidden mt-8 text-center">Situation Descriptions</h3>
-      <form onSubmit={handleSubmit(onSubmit)} className="grid space-y-6 mt-4 md:mt-8">
+      <form
+        onSubmit={(e) => {
+          e.stopPropagation()
+          handleSubmit(onSubmit)
+        }}
+        className="grid space-y-6 mt-4 md:mt-8"
+      >
         <div className="grid md:flex gap-4 items-end">
           <FormTextArea
             control={control}
@@ -151,7 +164,7 @@ export function SituationDescriptions() {
           <hr className="md:hidden" />
         </div>
         <hr className="hidden md:block" />
-        <div className="flex flex-wrap justify-end flex-col-reverse md:flex-row gap-8">
+        <div className="flex flex-wrap mx-auto justify-end flex-col-reverse md:flex-row gap-8">
           <Button type="submit" variant="contained" className="w-80 justify-self-end">
             {t('save')}
           </Button>
@@ -160,16 +173,7 @@ export function SituationDescriptions() {
           </Button>
         </div>
       </form>
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={showSnackbar}
-        // message={snackBarMsg}
-        // slotProps={{
-        //   content: {
-        //     className: 'bg-red-500 text-white text-xl',
-        //   },
-        // }}
-      >
+      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} open={showSnackbar}>
         <Alert severity="error">{snackBarMsg}</Alert>
       </Snackbar>
     </div>

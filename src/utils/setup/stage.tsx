@@ -3,6 +3,8 @@ import { createContext, useContext, useState } from 'react'
 export const StageContext = createContext<{
   stage: number
   setStage: React.Dispatch<React.SetStateAction<number>>
+  isFormComplete: boolean
+  setIsFormComplete: React.Dispatch<React.SetStateAction<boolean>>
 } | null>(null)
 
 export function StageProvider(
@@ -14,9 +16,12 @@ export function StageProvider(
   // }
 ) {
   const [stage, setStage] = useState(1)
+  const [isFormComplete, setIsFormComplete] = useState(false)
   const value = {
     stage,
     setStage,
+    isFormComplete,
+    setIsFormComplete,
   }
   return <StageContext.Provider value={value}>{props.children}</StageContext.Provider>
 }
