@@ -102,7 +102,7 @@ export function PersonalInfoForm() {
             control={control}
             name="address"
             label={t('address')}
-            rows={6}
+            rows={8}
             rules={{
               required: 'Name is required',
             }}
