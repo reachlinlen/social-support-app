@@ -85,7 +85,7 @@ export function SituationDescriptions() {
             rows={5}
           />
           <HelpMeWrite
-            type="current_financial_situation"
+            type="Current Financial Situation"
             handleAccept={(acceptedResponse: string) => {
               setValue('current_financial_situation', acceptedResponse, {
                 shouldValidate: true,
@@ -104,7 +104,7 @@ export function SituationDescriptions() {
             rows={5}
           />
           <HelpMeWrite
-            type="employment_circumstances"
+            type="Employment Circumstances"
             handleAccept={(acceptedResponse: string) => {
               setValue('employment_circumstances', acceptedResponse, {
                 shouldValidate: true,
@@ -123,7 +123,7 @@ export function SituationDescriptions() {
             rows={5}
           />
           <HelpMeWrite
-            type="reason_for_applying"
+            type="Reason For Applying"
             handleAccept={(acceptedResponse: string) => {
               setValue('reason_for_applying', acceptedResponse, {
                 shouldValidate: true,
