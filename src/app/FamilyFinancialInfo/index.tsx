@@ -8,29 +8,45 @@ import { useStage } from '../../utils/setup/stage'
 import type { IFormFamilyFinancialInfoType } from './family-financial.types'
 import { EmploymentStatus, HousingStatus, MaritalStatus, NEW_DEPENDENT } from './family-financial.service'
 import { FormInput } from '../../ui/designsystem/Input'
+import { useEffect } from 'react'
 
 export function FamilyFinancialInfo() {
   const { setStage } = useStage()
   const { t } = useTranslation()
-  const { control, handleSubmit } = useForm<IFormFamilyFinancialInfoType>({
+  const { control, handleSubmit, setValue } = useForm<IFormFamilyFinancialInfoType>({
     defaultValues: {
       marital_status: '',
       dependents: [NEW_DEPENDENT],
       employment_status: '',
       monthly_income: undefined,
-      housing_status: undefined,
+      housing_status: '',
     },
     mode: 'onChange',
   })
   const { fields: dependentFields, append, remove } = useFieldArray({ name: 'dependents', control })
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log({ data })
+    const dependents = data.dependents.filter(({ relationship }: { relationship: string }) => relationship != '')
+    localStorage.setItem('family_info', JSON.stringify({ ...data, dependents }))
     setStage((previousStage) => previousStage + 1)
   }
+
   const handleBack = () => {
     setStage((previousStage) => previousStage - 1)
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('family_info')) {
+      const finalcialInfo = JSON.parse(localStorage.getItem('family_info'))
+      const dependents = finalcialInfo.dependents.length == 0 ? [NEW_DEPENDENT] : finalcialInfo.dependents
+      setValue('marital_status', finalcialInfo.marital_status)
+      setValue('dependents', dependents)
+      setValue('employment_status', finalcialInfo.employment_status)
+      setValue('monthly_income', finalcialInfo.monthly_income)
+      setValue('housing_status', finalcialInfo.housing_status)
+    }
+  }, [setValue])
+
   return (
     <div className="desktopView">
       <h2 className="hidden md:block mt-8">Family & Financial Information</h2>
@@ -64,8 +80,13 @@ export function FamilyFinancialInfo() {
           {dependentFields.map((field, fieldIndex) => {
             return (
               <div key={field.id} className="grid md:flex gap-4">
-                <FormInput control={control} name={`dependents.${fieldIndex}.relationship`} label="Relationship" />
-                <FormInput control={control} name={`dependents.${fieldIndex}.name`} label="Name" />
+                <FormInput
+                  control={control}
+                  isRequired={false}
+                  name={`dependents.${fieldIndex}.relationship`}
+                  label="Relationship"
+                />
+                <FormInput control={control} isRequired={false} name={`dependents.${fieldIndex}.name`} label="Name" />
                 <hr className="md:hidden" />
                 <div className="min-w-20 flex flex-start self-end gap-x-2">
                   {fieldIndex == dependentFields.length - 1 && (
@@ -101,7 +122,7 @@ export function FamilyFinancialInfo() {
             {t('next')}
           </Button>
           <Button variant="outlined" className="w-80 justify-self-end" onClick={handleBack}>
-            {t('next')}
+            {t('back')}
           </Button>
         </div>
       </form>
