@@ -8,17 +8,18 @@ import { useStage } from '../../utils/setup/stage'
 import type { IFormFamilyFinancialInfoType } from './family-financial.types'
 import { EmploymentStatus, HousingStatus, MaritalStatus, NEW_DEPENDENT } from './family-financial.service'
 import { FormInput } from '../../ui/designsystem/Input'
+import { useEffect } from 'react'
 
 export function FamilyFinancialInfo() {
   const { setStage } = useStage()
   const { t } = useTranslation()
-  const { control, handleSubmit } = useForm<IFormFamilyFinancialInfoType>({
+  const { control, handleSubmit, setValue } = useForm<IFormFamilyFinancialInfoType>({
     defaultValues: {
       marital_status: '',
       dependents: [NEW_DEPENDENT],
       employment_status: '',
       monthly_income: undefined,
-      housing_status: undefined,
+      housing_status: '',
     },
     mode: 'onChange',
   })
@@ -33,6 +34,18 @@ export function FamilyFinancialInfo() {
   const handleBack = () => {
     setStage((previousStage) => previousStage - 1)
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('family_info')) {
+      const finalcialInfo = JSON.parse(localStorage.getItem('family_info'))
+      const dependents = finalcialInfo.dependents.length == 0 ? [NEW_DEPENDENT] : finalcialInfo.dependents
+      setValue('marital_status', finalcialInfo.marital_status)
+      setValue('dependents', dependents)
+      setValue('employment_status', finalcialInfo.employment_status)
+      setValue('monthly_income', finalcialInfo.monthly_income)
+      setValue('housing_status', finalcialInfo.housing_status)
+    }
+  }, [setValue])
 
   return (
     <div className="desktopView">

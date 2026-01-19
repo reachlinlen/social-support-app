@@ -23,6 +23,7 @@ export function FormInput({ control, name, label, isRequired = true, className }
           <TextField
             variant="outlined"
             label={label}
+            value={field.value}
             onChange={field.onChange}
             required={isRequired}
             className={cn('min-w-80 max-w-80', className)}
