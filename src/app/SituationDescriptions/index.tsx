@@ -84,16 +84,10 @@ export function SituationDescriptions() {
   }
 
   return (
-    <div className="desktopView">
+    <div className="desktopView mb-4">
       <h2 className="hidden md:block mt-8">Situation Descriptions</h2>
-      <h3 className="block md:hidden mt-8 text-center">Situation Descriptions</h3>
-      <form
-        onSubmit={(e) => {
-          e.stopPropagation()
-          handleSubmit(onSubmit)
-        }}
-        className="grid space-y-6 mt-4 md:mt-8"
-      >
+      <h3 className="block md:hidden mt-3 text-center">Situation Descriptions</h3>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid space-y-6 mt-4 md:mt-8">
         <div className="grid md:flex gap-4 items-end">
           <FormTextArea
             control={control}
@@ -164,9 +158,9 @@ export function SituationDescriptions() {
           <hr className="md:hidden" />
         </div>
         <hr className="hidden md:block" />
-        <div className="flex flex-wrap mx-auto justify-end flex-col-reverse md:flex-row gap-8">
+        <div className="flex flex-wrap mx-auto justify-end flex-col-reverse md:flex-row gap-4 md:gap-8">
           <Button type="submit" variant="contained" className="w-80 justify-self-end">
-            {t('save')}
+            {t('submit')}
           </Button>
           <Button variant="outlined" className="w-80 justify-self-end" onClick={handleBack}>
             {t('back')}
