@@ -57,6 +57,19 @@ beforeAll(() => {
 })
 afterEach(() => vi.resetAllMocks())
 
+const formvalues = {
+  name: 'name',
+  national_id: '784-1234-1234567-1',
+  date_of_birth: '2026-01-19T14:59:21.000Z',
+  gender: 'male',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  phone: '+971502511478',
+  email: 'aa@aaa.com',
+}
+
 describe('Organisation Details Entry Form Test', () => {
   const submitSpy = vi.spyOn(mocks, 'onSubmit')
   it('Next button not working when form is not filled', async () => {
@@ -71,21 +84,7 @@ describe('Organisation Details Entry Form Test', () => {
   })
 
   it('Next button calls handle submit when form is filled', async () => {
-    localStorageMock.setItem(
-      'personal_info',
-      JSON.stringify({
-        name: 'name',
-        national_id: '784-1234-1234567-1',
-        // date_of_birth: '2026-01-19T14:59:21.000Z',
-        gender: 'male',
-        address: 'address',
-        city: 'city',
-        state: 'state',
-        country: 'country',
-        phone: '+971502510377',
-        email: 'aa@aaa.com',
-      })
-    )
+    localStorageMock.setItem('personal_info', JSON.stringify(formvalues))
     const user = userEvent.setup()
     const { asFragment } = render(
       <StageProvider>
@@ -94,17 +93,6 @@ describe('Organisation Details Entry Form Test', () => {
     )
     expect(asFragment()).toMatchSnapshot()
     await user.click(screen.getByRole('button', { name: /next/i }))
-    expect(submitSpy).toHaveBeenCalledWith({
-      name: 'name',
-      national_id: '784-1234-1234567-1',
-      // date_of_birth: '2026-01-19T14:59:21.000Z',
-      gender: 'male',
-      address: 'address',
-      city: 'city',
-      state: 'state',
-      country: 'country',
-      phone: '+971502510377',
-      email: 'aa@aaa.com',
-    })
+    expect(submitSpy).toHaveBeenCalledWith(formvalues)
   })
 })

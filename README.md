@@ -21,7 +21,7 @@ OpenAI
 2. Run <mark>npm start</mark> or <mark>npm run dev</mark> to run the application
 3. Access the application at [http://localhost:5173/](http://localhost:5173/) in your browser. Best supported in <mark>Chrome</mark> / <mark>Firefox</mark>
 4. If you're unable to access the app at [http://localhost:5173/](http://localhost:5173/), you may running another app in the same port. Do check the command line to fetch the correct port
-5. This app required OpenAI access to complete the form. Please check the steps mentioned to get OpenAI API Key.
+5. This app requires OpenAI access to complete the form. Please check the steps mentioned to get OpenAI API Key.
 
 # Steps to get OpenAI API Key
 
@@ -30,6 +30,10 @@ OpenAI
 - On the same menu list, on the top you can see link to <mark>‘API keys’</mark>. On the same page, click <mark>‘Create new secret key’</mark> button to create a new API Key.
 - Please copy and add <mark>VITE_OPENAI_KEY={apiKey created}</mark> in .env file.
 - Since env file is git ignored, the secret is not stored in git. Hence, please do not save secret keys in any other files as the secrets may be accidentally shared with others.
+
+# Run Test Cases
+
+Run <mark>npm run test</mark> to run test cases
 
 # Architecture
 
