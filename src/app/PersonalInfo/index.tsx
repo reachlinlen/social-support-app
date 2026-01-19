@@ -145,6 +145,10 @@ export function PersonalInfoForm() {
             label="Phone"
             rules={{
               required: 'Phone is required',
+              pattern: {
+                value: /^(?:\+971|00971|0)?5[012568]\d{7}$/g,
+                message: 'Invalid Pattern',
+              },
             }}
             error={errors['phone']}
           />

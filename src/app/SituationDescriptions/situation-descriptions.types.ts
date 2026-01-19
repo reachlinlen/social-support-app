@@ -10,13 +10,3 @@ export type AIInteractionType = {
     response: string
   }[]
 }
-//   []
-//   employment_circumstances: {
-//     prompt: string
-//     response: string
-//   }[]
-//   reason_for_applying: {
-//     prompt: string
-//     response: string
-//   }[]
-// }
