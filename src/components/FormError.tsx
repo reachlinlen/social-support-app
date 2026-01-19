@@ -1,7 +1,7 @@
 import type { FieldError } from 'react-hook-form'
 
-export function FormError({ error, label }: { label: string; error: FieldError }) {
-  switch (error.type) {
+export function FormError({ error, label }: { label: string; error: FieldError | undefined }) {
+  switch (error?.type) {
     case 'required':
       return <p role="alert">{error.message}</p>
     case 'minLength':
@@ -16,10 +16,11 @@ export function FormError({ error, label }: { label: string; error: FieldError }
       return <p role="alert">Value should be less than maximum</p>
     // case 'validate':
     default:
-      return (
-        <p role="alert">
-          {label} issue in {error.type} condition
-        </p>
-      )
+      return null
+    // return (
+    //   <p role="alert">
+    //     {label} issue in {error.type} condition
+    //   </p>
+    // )
   }
 }
