@@ -2,18 +2,23 @@ import { useForm, type SubmitHandler, type FieldValues, useFieldArray } from 're
 import { Button } from '@mui/material'
 import { IconPlus, IconTrashFilled } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 import { FormSelect } from '../../ui/designsystem/Select'
 import { useStage } from '../../utils/setup/stage'
 import type { IFormFamilyFinancialInfoType } from './family-financial.types'
 import { EmploymentStatus, HousingStatus, MaritalStatus, NEW_DEPENDENT } from './family-financial.service'
 import { FormInput } from '../../ui/designsystem/Input'
-import { useEffect } from 'react'
 
 export function FamilyFinancialInfo() {
   const { setStage } = useStage()
   const { t } = useTranslation()
-  const { control, handleSubmit, setValue } = useForm<IFormFamilyFinancialInfoType>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<IFormFamilyFinancialInfoType>({
     defaultValues: {
       marital_status: '',
       dependents: [NEW_DEPENDENT],
@@ -59,6 +64,10 @@ export function FamilyFinancialInfo() {
             name="marital_status"
             label="Marital Status"
             items={MaritalStatus}
+            rules={{
+              required: 'Marital Status is required',
+            }}
+            error={errors['marital_status']}
           />
           <FormSelect
             control={control}
@@ -66,6 +75,10 @@ export function FamilyFinancialInfo() {
             name="employment_status"
             label="Employment Status"
             items={EmploymentStatus}
+            rules={{
+              required: 'Employment Status is required',
+            }}
+            error={errors['employment_status']}
           />
           <FormSelect
             control={control}
@@ -73,6 +86,10 @@ export function FamilyFinancialInfo() {
             name="housing_status"
             label="Housing Status"
             items={HousingStatus}
+            rules={{
+              required: 'Housing Status is required',
+            }}
+            error={errors['housing_status']}
           />
         </div>
         <div className="grid space-y-4">
@@ -80,13 +97,8 @@ export function FamilyFinancialInfo() {
           {dependentFields.map((field, fieldIndex) => {
             return (
               <div key={field.id} className="grid md:flex gap-4">
-                <FormInput
-                  control={control}
-                  isRequired={false}
-                  name={`dependents.${fieldIndex}.relationship`}
-                  label="Relationship"
-                />
-                <FormInput control={control} isRequired={false} name={`dependents.${fieldIndex}.name`} label="Name" />
+                <FormInput control={control} name={`dependents.${fieldIndex}.relationship`} label="Relationship" />
+                <FormInput control={control} name={`dependents.${fieldIndex}.name`} label="Name" />
                 <hr className="md:hidden" />
                 <div className="min-w-20 flex flex-start self-end gap-x-2">
                   {fieldIndex == dependentFields.length - 1 && (

@@ -15,7 +15,12 @@ export function SituationDescriptions() {
   const { t } = useTranslation()
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [snackBarMsg, setSnackBarMsg] = useState('')
-  const { control, handleSubmit, setValue } = useForm<SituationsDescriptionsType>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<SituationsDescriptionsType>({
     defaultValues: {
       current_financial_situation: '',
       employment_circumstances: '',
@@ -81,11 +86,15 @@ export function SituationDescriptions() {
             control={control}
             name="current_financial_situation"
             label="Current Financial Situation"
-            className="min-w-2/3"
+            className="w-full md:w-2/3"
             rows={5}
+            rules={{
+              required: 'Current Financial Situation is required',
+            }}
+            error={errors['current_financial_situation']}
           />
           <HelpMeWrite
-            type="current_financial_situation"
+            type="Current Financial Situation"
             handleAccept={(acceptedResponse: string) => {
               setValue('current_financial_situation', acceptedResponse, {
                 shouldValidate: true,
@@ -100,11 +109,15 @@ export function SituationDescriptions() {
             control={control}
             name="employment_circumstances"
             label="Employment Circumstances"
-            className="min-w-2/3"
+            className="w-full md:w-2/3"
             rows={5}
+            rules={{
+              required: 'Employment Circumstances is required',
+            }}
+            error={errors['employment_circumstances']}
           />
           <HelpMeWrite
-            type="employment_circumstances"
+            type="Employment Circumstances"
             handleAccept={(acceptedResponse: string) => {
               setValue('employment_circumstances', acceptedResponse, {
                 shouldValidate: true,
@@ -119,11 +132,15 @@ export function SituationDescriptions() {
             control={control}
             name="reason_for_applying"
             label="Reason For Applying"
-            className="min-w-2/3"
+            className="w-full md:w-2/3"
             rows={5}
+            rules={{
+              required: 'Reason For Applying is required',
+            }}
+            error={errors['reason_for_applying']}
           />
           <HelpMeWrite
-            type="reason_for_applying"
+            type="Reason For Applying"
             handleAccept={(acceptedResponse: string) => {
               setValue('reason_for_applying', acceptedResponse, {
                 shouldValidate: true,

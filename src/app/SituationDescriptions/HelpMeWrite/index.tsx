@@ -17,9 +17,9 @@ export function HelpMeWrite({
   const [open, setOpen] = useState(false)
   const [latestResponse, setLatestResponse] = useState<string | undefined>(undefined)
   const [AIInteractionHistory, setAIInteractionHistory] = useState<AIInteractionType>({
-    current_financial_situation: [],
-    employment_circumstances: [],
-    reason_for_applying: [],
+    'Current Financial Situation': [],
+    'Employment Circumstances': [],
+    'Reason for Applying': [],
   })
   const { control, handleSubmit, setValue } = useForm<{ prompt: string }>({
     defaultValues: {
@@ -83,7 +83,8 @@ export function HelpMeWrite({
               <FormTextArea
                 control={control}
                 name="prompt"
-                label="Enter a Prompt to request AI to give suggestions..."
+                label={type}
+                placeholder={`Enter a Prompt to request AI to give suggestions for ${type}`}
                 rows={3}
                 className={'min-w-5/6'}
               />
